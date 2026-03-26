@@ -1,0 +1,50 @@
+{
+  "info": {
+    "_postman_id": "ca65b3f0-436f-4a70-96e4-fa067e8afeed",
+    "name": "stripe-provider-service",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53440445",
+    "_collection_link": "https://go.postman.co/collection/53440445-ca65b3f0-436f-4a70-96e4-fa067e8afeed?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "http://localhost:8083/v1/payments",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-HMAC-SIGNATURE",
+            "value": "ndJK6xlYM8mFkaPCPr/SNw9YPPfKz9IJZpskq8ChHq4=",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n      \"user\": {\r\n        \"endUserID\": \"user123123\",\r\n        \"firstname\": \"John\",\r\n        \"lastname\": \"Doe\",\r\n        \"email\": \"john.doe@example.com\",\r\n        \"mobilePhone\": \"+1234567890\"\r\n      },\r\n      \"payment\": {\r\n        \"currency\": \"USD\",\r\n        \"amount\": 100,\r\n        \"brandName\": \"MyShop\",\r\n        \"locale\": \"en-US\",\r\n        \"country\": \"US\",\r\n   \r\n        \"merchantTxnRef\": \"TXN1234560021\",\r\n        \"paymentMethod\": \"APM\",\r\n        \"provider\": \"STRIPE\",\r\n        \"paymentType\": \"SALE\",\r\n       \r\n        \"successUrl\": \"https://example.com/success\",\r\n          \"cancelUrl\": \"https://example.com/cancel\",\r\n         \r\n        \"lineItems\": [\r\n            {\r\n              \"currency\": \"EUR\",\r\n              \"productName\": \"Phon\",\r\n              \"unitAmount\": 200,\r\n              \"quantity\": 1\r\n            },\r\n            {\r\n              \"currency\": \"EUR\",\r\n              \"productName\": \"Headphones\",\r\n              \"unitAmount\": 500,\r\n              \"quantity\": 2\r\n            }\r\n          ]\r\n       \r\n      }\r\n    }\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8083/v1/payments",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "v1",
+            "payments"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
