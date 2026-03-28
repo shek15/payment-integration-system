@@ -1,4 +1,4 @@
-package com.hulkhiretech.payments;
+package com.mycompany.payments;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
