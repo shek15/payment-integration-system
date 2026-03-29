@@ -17,7 +17,13 @@ import com.mycompany.payments.constant.Constants;
 import com.mycompany.payments.pojo.CreatePaymentReq;
 import com.mycompany.payments.pojo.LineItem;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
+/**
+ * Builds Stripe-specific request payloads from the incoming payment request.
+ */
 public class CreatePaymentHelper {
 
     @Value("${stripe.secret.key}")
@@ -27,6 +33,12 @@ public class CreatePaymentHelper {
     private String stripeCheckoutSessionUrl;
 
     @SuppressWarnings("null")
+    /**
+     * Creates the HTTP request object required to call Stripe's checkout session API.
+     *
+     * @param createPaymentReq incoming payment request
+     * @return fully populated HTTP request for the Stripe session endpoint
+     */
     public HttpRequest preparedStripeCreateSessionRequest(CreatePaymentReq createPaymentReq) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBasicAuth(stripeSecretKey, "");
@@ -40,9 +52,17 @@ public class CreatePaymentHelper {
         httpRequest.setBody(body);
         httpRequest.setUrl(stripeCheckoutSessionUrl);
 
+        log.debug("Prepared Stripe HTTP request for {} with {} form fields", stripeCheckoutSessionUrl, body.size());
+
         return httpRequest;
     }
 
+    /**
+     * Converts the generic payment request into the form-url-encoded structure expected by Stripe.
+     *
+     * @param createPaymentReq payment request received by the API
+     * @return form-url-encoded key/value pairs for the Stripe API
+     */
     public MultiValueMap<String, String> prepareFormUrlEncoded(CreatePaymentReq createPaymentReq) {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 
@@ -58,10 +78,12 @@ public class CreatePaymentHelper {
 
                 addIfPresent(body, lineItemPrefix + Constants.PRICE_DATA_CURRENCY, lineItem.getCurrency());
                 addIfPresent(body, lineItemPrefix + Constants.PRICE_DATA_PRODUCT_NAME, lineItem.getProductName());
-                body.add(lineItemPrefix + Constants.PRICE_DATA_UNIT_AMOUNT, String.valueOf(lineItem.getUnitAmount()));
-                body.add(lineItemPrefix + Constants.QUANTITY, String.valueOf(lineItem.getQuantity()));
+                addIfPresent(body, lineItemPrefix + Constants.PRICE_DATA_UNIT_AMOUNT, String.valueOf(lineItem.getUnitAmount()));
+                addIfPresent(body, lineItemPrefix + Constants.QUANTITY, String.valueOf(lineItem.getQuantity()));
             }
         }
+
+        log.debug("Prepared Stripe form body with {} line items", CollectionUtils.isEmpty(lineItems) ? 0 : lineItems.size());
 
         return body;
     }
@@ -70,6 +92,8 @@ public class CreatePaymentHelper {
     private void addIfPresent(MultiValueMap<String, String> body, String key, String value) {
         if (StringUtils.hasText(value)) {
             body.add(key, value);
+        } else {
+            log.debug("Skipping blank form field {}", key);
         }
     }
 }

@@ -11,23 +11,34 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+/**
+ * Executes outbound HTTP requests to external provider APIs.
+ */
 public class HttpServiceEngine {
+
     private final RestClient restClient;
 
+    /**
+     * Calls the configured external endpoint and returns the raw response body.
+     *
+     * @param httpRequest outbound request metadata and payload
+     * @return raw HTTP response from the external provider
+     */
+    @SuppressWarnings("null")
     public ResponseEntity<String> makeHttpCall(HttpRequest httpRequest) {
-        log.info("Making Http call to external service...");
+        log.info("Calling external service at {}", httpRequest.getUrl());
 
-        @SuppressWarnings("null")
-        ResponseEntity<String> responseEntity =  restClient.method(httpRequest.getHttpMethod() != null ? httpRequest.getHttpMethod() : HttpMethod.POST)
-        .uri(httpRequest.getUrl())
-        .headers(restClientpHeaders -> restClientpHeaders.addAll(httpRequest.getHttpHeaders()))
-        .body(httpRequest.getBody())
-        .retrieve()
-        .toEntity(String.class);
+        ResponseEntity<String> responseEntity = restClient.method(HttpMethod.POST)
+            .uri(httpRequest.getUrl())
+            .headers(restClientpHeaders -> restClientpHeaders.addAll(httpRequest.getHttpHeaders()))
+            .body(httpRequest.getBody())
+            .retrieve()
+            .toEntity(String.class);
 
-        log.info("\nHttp call response from HttpServiceEngine: {}", responseEntity);
+        log.info("Received external response with status code {}", responseEntity.getStatusCode());
+        log.debug("External response body length: {}",
+            responseEntity.getBody() != null ? responseEntity.getBody().length() : 0);
 
         return responseEntity;
     }
-
 }
