@@ -76,9 +76,10 @@ Payment Validation Service
            ↓
         Response
 ```
+## Payment Flow
+![An overview of payment flow](./image.png)
 
-
-## 🛠️ Tech Stack
+## 🛠️ Teḥch Stack
 - Backend: Java, Spring Boot, Spring Security
 
 
