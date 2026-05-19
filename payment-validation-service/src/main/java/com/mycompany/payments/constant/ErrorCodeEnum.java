@@ -90,7 +90,7 @@ public enum ErrorCodeEnum {
     QUANTITY_INVALID("10406", "quantity must be at least 1"), 
     FIRSTNAME_CONTAINS_HELLO("100039", "firstname cannot contain 'hello'"), 
     LASTNAME_CONTAINS_HELLO("100040", "lastname cannot contain 'hello'"), 
-    AMOUNT_PASS_MAX_LIMIT("100041", "amount cannot be greater than 500"), 
+    EMAIL_CONTAINS_HELLO("100041", "email cannot contain 'hello'"), 
     DUPLICATE_TRANSACTION("100042", "Duplicate transaction detected for the given endUserID and merchantTxnRef"), 
     FAILED_TO_SAVE_PAYMENT_REQUEST("100043", "Failed to save merchant payment request due to an internal error"), 
     INVALID_HMAC("100044", "Invalid HMAC Signature"), 

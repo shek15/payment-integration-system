@@ -1,11 +1,13 @@
 package com.mycompany.payments.pojo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErrorResponse {
-    private final String errorCode;
-    private final String errorMessage;
+    private String errorCode;
+    private String errorMessage;
 }
