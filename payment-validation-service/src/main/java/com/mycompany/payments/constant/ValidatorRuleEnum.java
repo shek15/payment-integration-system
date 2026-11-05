@@ -24,7 +24,7 @@ public enum ValidatorRuleEnum {
     }
 
     public static Optional<Class<? extends BusinessValidator>> getValidatorClassByRuleName(String ruleName) {
-        if (Optional.class == null)
+        if (ruleName == null)
             return Optional.empty();
         
         for (ValidatorRuleEnum ruleEnum : ValidatorRuleEnum.values()) {
