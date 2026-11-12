@@ -2,18 +2,14 @@ package com.mycompany.payments.constant;
 
 import java.util.Optional;
 
-import com.mycompany.payments.service.impl.businessvalidatorimpl.ValidatorRule1;
-import com.mycompany.payments.service.impl.businessvalidatorimpl.ValidatorRule2;
-import com.mycompany.payments.service.impl.businessvalidatorimpl.ValidatorRule3;
+import com.mycompany.payments.service.impl.businessvalidatorimpl.DuplicateTxnValidator;
 import com.mycompany.payments.service.interfaces.BusinessValidator;
 
 import lombok.Getter;
 
 @Getter
 public enum ValidatorRuleEnum {
-    VALIDATION_RULE_1("VALIDATION_RULE_1", ValidatorRule1.class),
-    VALIDATION_RULE_2("VALIDATION_RULE_2", ValidatorRule2.class), 
-    VALIDATION_RULE_3("VALIDATION_RULE_3",ValidatorRule3.class);
+    DUPLICATE_TXN_VALIDATOR("DUPLICATE_TXN_VALIDATOR", DuplicateTxnValidator.class);
 
     private final String ruleName;
     private final Class<? extends BusinessValidator> validatorClass;

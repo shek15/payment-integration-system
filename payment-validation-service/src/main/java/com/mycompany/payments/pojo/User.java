@@ -28,7 +28,7 @@ public class User {
 
     @NotBlank(message = "MOBILE_PHONE_REQUIRED")
     @Pattern(
-        regexp = "^\\+?\\d{10}$", // Character class \d for [0-9]
+        regexp = "^\\+[1-9]\\d{1,14}$", // Character class \d for [0-9]
         message = "MOBILE_PHONE_INVALID"
     )
     private String mobilePhone;

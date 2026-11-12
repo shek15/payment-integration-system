@@ -19,16 +19,21 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService{
-    @Value("${businessValidatorRules}")
+
+    @Value("${validation.rules}")
     private String validationRules;
 
     private final ApplicationContext applicationContext;
 
     @Override
     public String validateAndCreatePayment(PaymentRequest paymentRequest) {
+
         String[] rules = validationRules.split(",");
+
         for (String rule : rules) {
-            Optional<Class<? extends BusinessValidator>> validatorClass = ValidatorRuleEnum.getValidatorClassByRuleName(rule);
+
+            Optional<Class<? extends BusinessValidator>> validatorClass = 
+            ValidatorRuleEnum.getValidatorClassByRuleName(rule);
 
             if (!validatorClass.isPresent()) {
                 log.warn("Validator class {} not found", rule);
@@ -43,9 +48,13 @@ public class PaymentServiceImpl implements PaymentService{
             }
 
             validator.validate(paymentRequest);
+
         }
+
         log.info("Successfully passed all the validator rules...");
+        
         return "Payment Request created";
+
     }
 
     @PostConstruct
